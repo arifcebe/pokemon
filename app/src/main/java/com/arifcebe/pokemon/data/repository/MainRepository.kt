@@ -37,3 +37,8 @@ object MainRepository {
     }
 }
 
+//class MainRepository(private val apiHelper: ApiHelper){
+//    fun getPokemons(): Single<List<Pokemon>> {
+//        return apiHelper.getPokemons()
+//    }
+//}

@@ -1,7 +1,6 @@
 package com.arifcebe.pokemon.ui.main.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.arifcebe.pokemon.R
@@ -9,35 +8,15 @@ import com.arifcebe.pokemon.data.model.Pokemon
 import com.arifcebe.pokemon.databinding.PokemonItemBinding
 import com.arifcebe.pokemon.utils.MappingClass
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.pokemon_item.view.*
 
-class MainAdapter(private val pokemons: ArrayList<Pokemon>) :
+interface PokemonAdapterService {
+    fun onClickPokemon(pokemon: Pokemon)
+}
+
+class MainAdapter(private val pokemons: ArrayList<Pokemon>, private val pokemonService: PokemonAdapterService) :
     RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
 
-    /*class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(pokemon: Pokemon) {
-
-            val id = MappingClass.getIdByUrl(pokemon.url!!)
-            val imageUrl = MappingClass.generateProfileImageUrl(id)
-
-            itemView.pokemon_name.text = pokemon.name
-            itemView.pokemon_id.text = MappingClass.generateIdLabel(id)
-            Glide.with(itemView.context)
-                .load(imageUrl)
-                .into(itemView.pokemon_picture)
-
-        }
-    }*/
-
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder =
-//        DataViewHolder(
-//            LayoutInflater.from(parent.context).inflate(
-//                R.layout.pokemon_item, parent, false
-//            )
-//        )
-
-
-
+    var selectedItem: Int = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val binding = PokemonItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DataViewHolder(binding)
@@ -55,6 +34,11 @@ class MainAdapter(private val pokemons: ArrayList<Pokemon>) :
                 Glide.with(holder.itemView.context)
                     .load(imageUrl)
                     .into(binding.pokemonPicture)
+
+                holder.itemView.setOnClickListener {
+                    pokemonService.onClickPokemon(pokemon)
+                }
+
             }
         }
     }

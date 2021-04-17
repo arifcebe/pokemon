@@ -1,5 +1,6 @@
 package com.arifcebe.pokemon.ui.main.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -7,12 +8,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.arifcebe.pokemon.PokemonDetailActivity
 import com.arifcebe.pokemon.data.model.Pokemon
 import com.arifcebe.pokemon.databinding.ActivityMainBinding
 import com.arifcebe.pokemon.ui.main.adapter.MainAdapter
+import com.arifcebe.pokemon.ui.main.adapter.PokemonAdapterService
 import com.arifcebe.pokemon.ui.main.viewmodel.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),  PokemonAdapterService{
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
@@ -23,11 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*binding.buttonAction.setOnClickListener {
-            val intent = Intent(this, PokemonDetailActivity::class.java)
-            startActivity(intent)
-        }*/
-
         setupUI()
         setupViewModel()
         setupObserver()
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = MainAdapter(arrayListOf())
+        adapter = MainAdapter(arrayListOf(), this)
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(
                 binding.recyclerView.context,
@@ -46,29 +44,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObserver() {
-//        mainViewModel.getUsers().observe(this, Observer {
-//            when (it.status) {
-//                Status.SUCCESS -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    it.data?.let { users -> renderList(users) }
-//                    binding.recyclerView.visibility = View.VISIBLE
-//                }
-//                Status.LOADING -> {
-//                    binding.progressBar.visibility = View.VISIBLE
-//                    binding.recyclerView.visibility = View.GONE
-//                }
-//                Status.ERROR -> {
-//                    binding.progressBar.visibility = View.GONE
-//                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        })
         binding.progressBar.visibility = View.VISIBLE
         mainViewModel.getPokemons()!!.observe(this, Observer { pokemonList ->
             binding.progressBar.visibility = View.GONE
             binding.recyclerView.visibility = View.VISIBLE
-            val list = pokemonList
-            renderList(list)
+            renderList(pokemonList)
         })
     }
 
@@ -79,6 +59,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    override fun onClickPokemon(pokemon: Pokemon) {
+        val intent = Intent(this, PokemonDetailActivity::class.java)
+        startActivity(intent)
     }
 
 }

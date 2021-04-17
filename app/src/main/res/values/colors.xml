@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#CBEBCA</color>
     <color name="secondary">#DAE7FB</color>
+    <color name="item_pressed">#7eddff</color>
 </resources>

@@ -10,7 +10,8 @@ object MappingClass {
     }
 
     fun generateProfileImageUrl(id: String): String {
-        return "${ApiHelper.IMAGE_BASE_URL}/$id.png"
+        val IMAGE_BASE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork"
+        return "${IMAGE_BASE_URL}/$id.png"
     }
 
     fun generateIdLabel(id: String): String {
