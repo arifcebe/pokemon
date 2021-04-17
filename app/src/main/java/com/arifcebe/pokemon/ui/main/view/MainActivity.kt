@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.arifcebe.pokemon.PokemonDetailActivity
 import com.arifcebe.pokemon.data.model.Pokemon
 import com.arifcebe.pokemon.databinding.ActivityMainBinding
 import com.arifcebe.pokemon.ui.main.adapter.MainAdapter
