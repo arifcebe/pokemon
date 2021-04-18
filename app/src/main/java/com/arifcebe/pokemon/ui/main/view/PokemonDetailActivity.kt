@@ -5,8 +5,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.arifcebe.pokemon.R
 import com.arifcebe.pokemon.databinding.ActivityPokemonDetailBinding
+import com.arifcebe.pokemon.ui.main.viewmodel.PokemonDetailViewModel
 import com.google.android.material.tabs.TabLayout
 
 class PokemonDetailActivity : AppCompatActivity() {
@@ -15,6 +18,8 @@ class PokemonDetailActivity : AppCompatActivity() {
     private lateinit var pagerAdapter: FragmentAdapter
     private lateinit var stats: StatsFragment
     private lateinit var evolution: EvolutionFragment
+    private lateinit var id: String
+    private lateinit var viewModel: PokemonDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +29,12 @@ class PokemonDetailActivity : AppCompatActivity() {
         pagerAdapter = FragmentAdapter(supportFragmentManager)
 //        binding.viewPager.adapter = pagerAdapter
 //        binding.tabLayout.setupWithViewPager(binding.viewPager)
-
+        id = intent.getStringExtra("id").toString()
+        viewModel = ViewModelProvider(this).get(PokemonDetailViewModel::class.java)
+        Log.d("Debug","id or name of pokemon $id")
+        viewModel.pokemonDetail(id)!!.observe(this, Observer {
+            binding.pokemonName.text = it.name
+        })
         stats = StatsFragment()
         evolution = EvolutionFragment()
 

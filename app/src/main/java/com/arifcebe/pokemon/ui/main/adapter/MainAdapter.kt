@@ -3,17 +3,18 @@ package com.arifcebe.pokemon.ui.main.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.arifcebe.pokemon.R
-import com.arifcebe.pokemon.data.model.Pokemon
+import com.arifcebe.pokemon.data.entity.PokemonEntity
+import com.arifcebe.pokemon.data.model.PokemonList
+import com.arifcebe.pokemon.data.room_model.PokemonRoomModel
 import com.arifcebe.pokemon.databinding.PokemonItemBinding
 import com.arifcebe.pokemon.utils.MappingClass
 import com.bumptech.glide.Glide
 
 interface PokemonAdapterService {
-    fun onClickPokemon(pokemon: Pokemon)
+    fun onClickPokemon(pokemon: PokemonEntity)
 }
 
-class MainAdapter(private val pokemons: ArrayList<Pokemon>, private val pokemonService: PokemonAdapterService) :
+class MainAdapter(private val pokemons: ArrayList<PokemonEntity>, private val pokemonService: PokemonAdapterService) :
     RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
 
     var selectedItem: Int = 0
@@ -48,7 +49,7 @@ class MainAdapter(private val pokemons: ArrayList<Pokemon>, private val pokemonS
 
     override fun getItemCount(): Int = pokemons.size
 
-    fun addData(list: List<Pokemon>) {
+    fun addData(list: List<PokemonEntity>) {
         pokemons.addAll(list)
     }
 }

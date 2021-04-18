@@ -1,18 +1,21 @@
 package com.arifcebe.pokemon.ui.main.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.arifcebe.pokemon.data.model.Pokemon
+import com.arifcebe.pokemon.data.entity.PokemonEntity
+import com.arifcebe.pokemon.data.model.PokemonList
 import com.arifcebe.pokemon.data.repository.MainRepository
+import com.arifcebe.pokemon.data.room_model.PokemonRoomModel
 
 class MainViewModel : ViewModel() {
 
-    var pokemonListLiveData: MutableLiveData<List<Pokemon>>? = null
+    var pokemonListLiveData: LiveData<List<PokemonEntity>>? = null
 
-    fun getPokemons() : LiveData<List<Pokemon>>? {
+    fun getPokemons(context: Context, offset: Int) : LiveData<List<PokemonEntity>>? {
 
-        pokemonListLiveData = MainRepository.getPokemonApiCall()
+        pokemonListLiveData = MainRepository.getPokemonApiCall(context, offset)
         return pokemonListLiveData
     }
 }

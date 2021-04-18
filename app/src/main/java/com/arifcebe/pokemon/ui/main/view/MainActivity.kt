@@ -8,7 +8,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.arifcebe.pokemon.data.model.Pokemon
+import com.arifcebe.pokemon.data.entity.PokemonEntity
+import com.arifcebe.pokemon.data.model.PokemonList
+import com.arifcebe.pokemon.data.room_model.PokemonRoomModel
 import com.arifcebe.pokemon.databinding.ActivityMainBinding
 import com.arifcebe.pokemon.ui.main.adapter.MainAdapter
 import com.arifcebe.pokemon.ui.main.adapter.PokemonAdapterService
@@ -44,14 +46,14 @@ class MainActivity : AppCompatActivity(),  PokemonAdapterService{
 
     private fun setupObserver() {
         binding.progressBar.visibility = View.VISIBLE
-        mainViewModel.getPokemons()!!.observe(this, Observer { pokemonList ->
+        mainViewModel.getPokemons(applicationContext,0)!!.observe(this, Observer { pokemonList ->
             binding.progressBar.visibility = View.GONE
             binding.recyclerView.visibility = View.VISIBLE
             renderList(pokemonList)
         })
     }
 
-    private fun renderList(pokemons: List<Pokemon>) {
+    private fun renderList(pokemons: List<PokemonEntity>) {
         adapter.addData(pokemons)
         adapter.notifyDataSetChanged()
     }
@@ -60,8 +62,9 @@ class MainActivity : AppCompatActivity(),  PokemonAdapterService{
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onClickPokemon(pokemon: Pokemon) {
+    override fun onClickPokemon(pokemon: PokemonEntity) {
         val intent = Intent(this, PokemonDetailActivity::class.java)
+        intent.putExtra("id", pokemon.name)
         startActivity(intent)
     }
 

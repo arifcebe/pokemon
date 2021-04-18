@@ -1,4 +1,4 @@
-package com.arifcebe.pokemon.data.api
+package com.arifcebe.pokemon.core.api
 
 import com.arifcebe.pokemon.BuildConfig
 import okhttp3.OkHttpClient

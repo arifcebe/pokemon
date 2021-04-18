@@ -1,7 +1,5 @@
 package com.arifcebe.pokemon.utils
 
-import com.arifcebe.pokemon.data.api.ApiHelper
-
 object MappingClass {
 
     fun getIdByUrl(url: String): String {
