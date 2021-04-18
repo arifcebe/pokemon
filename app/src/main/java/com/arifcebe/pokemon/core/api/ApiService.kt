@@ -1,7 +1,9 @@
 package com.arifcebe.pokemon.core.api
 
+import com.arifcebe.pokemon.data.entity.Pokemon
 import com.arifcebe.pokemon.data.model.BaseList
-import com.arifcebe.pokemon.data.model.PokemonList
+import com.arifcebe.pokemon.data.model.PokemonModel
+import com.arifcebe.pokemon.data.model.PokemonSpeciesModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,9 +13,12 @@ interface ApiService {
 
     @GET("pokemon")
     fun getPokemons(@Query("offset") offset: String,
-                    @Query("limit") limit: String): Call<BaseList<List<PokemonList>>>
+                    @Query("limit") limit: String): Call<BaseList<List<PokemonModel>>>
 
-    @GET("pokemon/{id}")
-    fun getPokemonDetail(@Path("id") id: String): Call<PokemonList>
+    @GET("pokemon/{idOrName}")
+    fun getPokemonDetail(@Path("idOrName") idOrName: String): Call<PokemonModel>
+
+    @GET("pokemon-species/{idOrName}")
+    fun getSpecies(@Path("idOrName") idOrName: String): Call<PokemonSpeciesModel>
 
 }

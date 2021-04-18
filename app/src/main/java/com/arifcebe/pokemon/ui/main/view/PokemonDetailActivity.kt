@@ -2,7 +2,10 @@ package com.arifcebe.pokemon.ui.main.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
@@ -10,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.arifcebe.pokemon.R
 import com.arifcebe.pokemon.databinding.ActivityPokemonDetailBinding
 import com.arifcebe.pokemon.ui.main.viewmodel.PokemonDetailViewModel
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 
 class PokemonDetailActivity : AppCompatActivity() {
@@ -27,13 +31,19 @@ class PokemonDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         pagerAdapter = FragmentAdapter(supportFragmentManager)
-//        binding.viewPager.adapter = pagerAdapter
-//        binding.tabLayout.setupWithViewPager(binding.viewPager)
         id = intent.getStringExtra("id").toString()
+//        val imageUrl = intent.getStringExtra("image").toString()
         viewModel = ViewModelProvider(this).get(PokemonDetailViewModel::class.java)
-        Log.d("Debug","id or name of pokemon $id")
-        viewModel.pokemonDetail(id)!!.observe(this, Observer {
-            binding.pokemonName.text = it.name
+        binding.pokemonName.text = id
+
+        loadingProgress(true)
+        viewModel.pokemonDetail(this, id)!!.observe(this, Observer {
+            loadingProgress(false)
+            Glide.with(applicationContext)
+                .load(it.image)
+                .into(binding.pokemonPicture)
+            binding.pokemonType.text = it.type
+            binding.pokemonDescription.text = it.species.flavorTextEntry
         })
         stats = StatsFragment()
         evolution = EvolutionFragment()
@@ -44,11 +54,17 @@ class PokemonDetailActivity : AppCompatActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Evolution"),1)
     }
 
+    private fun loadingProgress(isLoading: Boolean){
+        binding.progressBar.isVisible = isLoading
+        binding.appbarLayout.isVisible = !isLoading
+        binding.nestedScrollview.isVisible = !isLoading
+    }
+
     private fun bindingWidgetWithAnEvent(){
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 Log.d("Debug","Position ${tab!!.position}")
-                setCurrentTab(tab!!.position)
+                setCurrentTab(tab.position)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -73,4 +89,6 @@ class PokemonDetailActivity : AppCompatActivity() {
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         fragmentTransaction.commit()
     }
+
+
 }

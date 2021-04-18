@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.arifcebe.pokemon.data.entity.PokemonEntity
-import com.arifcebe.pokemon.data.model.PokemonList
-import com.arifcebe.pokemon.data.room_model.PokemonRoomModel
 import com.arifcebe.pokemon.databinding.PokemonItemBinding
 import com.arifcebe.pokemon.utils.MappingClass
 import com.bumptech.glide.Glide
