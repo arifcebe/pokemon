@@ -31,7 +31,7 @@ class MainAdapter(private val pokemons: ArrayList<PokemonEntity>, private val po
                 val imageUrl = MappingClass.generateProfileImageUrl(id)
 
                 binding.pokemonName.text = pokemon.name
-                binding.pokemonId.text = MappingClass.generateIdLabel(id)
+                binding.pokemonId.text = pokemon.idLabel
                 Glide.with(holder.itemView.context)
                     .load(imageUrl)
                     .into(binding.pokemonPicture)

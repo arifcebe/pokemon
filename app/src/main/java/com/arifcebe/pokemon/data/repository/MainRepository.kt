@@ -29,9 +29,9 @@ object MainRepository : CoroutineScope {
         return PokemonDatabase.getDataseClient(context)
     }
 
-    fun getPokemonApiCall(context: Context, offset: Int): LiveData<List<PokemonEntity>> {
+    fun getPokemonApiCall(context: Context, offset: String): MutableLiveData<List<PokemonEntity>> {
 
-        val call = ApiHelper.apiService.getPokemons()
+        val call = ApiHelper.apiService.getPokemons(offset,20.toString())
         database = initializeDatabase(context)
         call.enqueue(object : Callback<BaseList<List<PokemonList>>> {
             override fun onResponse(
@@ -45,16 +45,15 @@ object MainRepository : CoroutineScope {
                     pokemons.previous,
                     pokemons.results
                 )
-//                pokemonList.value = baseList.results
-                // TODO check internet connection
+
                 val pokemonRoomList: MutableList<PokemonEntity> = ArrayList()
                 for (pokemon in baseList.results!!) {
                     val pokemonRoom: PokemonEntity =
                         PokemonEntity(pokemon.name, pokemon.url)
                     pokemonRoomList.add(pokemonRoom)
                 }
-//                pokemonList.postValue(pokemonRoomList)
-                pokemonList.value = pokemonRoomList
+                pokemonList.postValue(pokemonRoomList)
+                //pokemonList.value = pokemonRoomList
             }
 
             override fun onFailure(call: Call<BaseList<List<PokemonList>>>, t: Throwable) {
@@ -64,31 +63,6 @@ object MainRepository : CoroutineScope {
         })
 
 
-        return pokemonList
-    }
-
-    fun getData(): List<PokemonList> {
-        val call = ApiHelper.apiService.getPokemons()
-        var pokemonList: List<PokemonList> = ArrayList<PokemonList>()
-        call.enqueue(object : Callback<BaseList<List<PokemonList>>> {
-            override fun onResponse(
-                call: Call<BaseList<List<PokemonList>>>,
-                response: Response<BaseList<List<PokemonList>>>
-            ) {
-                val pokemons = response.body()
-                val baseList = BaseList<List<PokemonList>>(
-                    pokemons!!.count,
-                    pokemons.next,
-                    pokemons.previous,
-                    pokemons.results
-                )
-                pokemonList = baseList.results!!
-            }
-
-            override fun onFailure(call: Call<BaseList<List<PokemonList>>>, t: Throwable) {
-
-            }
-        })
         return pokemonList
     }
 
