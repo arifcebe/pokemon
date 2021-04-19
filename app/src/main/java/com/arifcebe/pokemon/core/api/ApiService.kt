@@ -1,9 +1,8 @@
 package com.arifcebe.pokemon.core.api
 
-import com.arifcebe.pokemon.data.entity.Pokemon
-import com.arifcebe.pokemon.data.model.BaseList
-import com.arifcebe.pokemon.data.model.PokemonModel
-import com.arifcebe.pokemon.data.model.PokemonSpeciesModel
+import com.arifcebe.pokemon.feature.pokemon_profile.data.model.BaseList
+import com.arifcebe.pokemon.feature.pokemon_profile.data.model.PokemonModel
+import com.arifcebe.pokemon.feature.pokemon_profile.data.model.PokemonSpeciesModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
