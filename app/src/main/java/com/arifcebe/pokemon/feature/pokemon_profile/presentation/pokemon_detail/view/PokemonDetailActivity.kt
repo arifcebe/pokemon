@@ -51,16 +51,16 @@ class PokemonDetailActivity : AppCompatActivity() {
             val speciesArgs: PokemonSpeciesArguments = PokemonSpeciesArguments(species.baseHappiness, species.captureRate, species.color, species.flavorTextEntry)
             pokemonArguments = PokemonArguments(it.id,it.name,it.idLabel,speciesArgs,it.abilities,stats,it.image,it.type,it.sprites)
 
-            statsFragment = StatsFragment.newInstance("0","2", pokemonArguments!!)
-            evolutionFragment = EvolutionFragment()
-
-            bindingWidgetWithAnEvent()
+//            statsFragment = StatsFragment.newInstance("0","2", pokemonArguments!!)
+//            evolutionFragment = EvolutionFragment()
+//
+//            bindingWidgetWithAnEvent()
         })
 //
-//        statsFragment = StatsFragment()
-//        evolutionFragment = EvolutionFragment()
-//
-//        bindingWidgetWithAnEvent()
+        statsFragment = StatsFragment()
+        evolutionFragment = EvolutionFragment()
+
+        bindingWidgetWithAnEvent()
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Stats"),0,true)
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Evolution"),1)
@@ -99,7 +99,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_container, fragment, fragment.javaClass.simpleName)
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        fragmentTransaction.commit()
+        fragmentTransaction.commitNow()
     }
 
 

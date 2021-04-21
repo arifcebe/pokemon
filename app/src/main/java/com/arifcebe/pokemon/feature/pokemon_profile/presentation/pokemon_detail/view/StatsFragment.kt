@@ -40,7 +40,7 @@ class StatsFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            pokemon = it.getParcelable(ARG_POKEMON)
+//            pokemon = it.getParcelable(ARG_POKEMON)
         }
     }
 
@@ -50,9 +50,9 @@ class StatsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
-        val adapter = StatsAdapter(pokemon!!)
-
-        _binding!!.recyclerView.adapter = adapter
+//        val adapter = StatsAdapter(pokemon!!)
+//
+//        _binding!!.recyclerView.adapter = adapter
         return _binding!!.root
     }
 
@@ -77,7 +77,7 @@ class StatsFragment : Fragment() {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
-                    putParcelable(ARG_POKEMON, pokemon)
+//                    putParcelable(ARG_POKEMON, pokemon)
                 }
             }
     }
